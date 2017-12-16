@@ -27,6 +27,8 @@ public class Ingredient {
 	private double calories;
 	private double fat;
 	private double sugar;
+	private double protein;
+	private double indexg;
 	private double salt;
 	
 	@OneToMany(mappedBy = "ingredient")
@@ -88,6 +90,19 @@ public class Ingredient {
 	}
 	public void setSugar(double sugar) {
 		this.sugar = sugar;
+	}
+	
+	public double getProtein() {
+		return protein;
+	}
+	public void setProtein(double protein) {
+		this.protein = protein;
+	}
+	public double getIndexg() {
+		return indexg;
+	}
+	public void setIndexg(double indexg) {
+		this.indexg = indexg;
 	}
 	public double getSalt() {
 		return salt;
