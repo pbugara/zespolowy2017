@@ -1,6 +1,5 @@
 package com.projekt.zespolowy.models;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,14 +21,15 @@ public class Ingredient {
 	@Column(name = "ingredient_id")
 	private long id;
 	private String name;
+	@Column(nullable=true)
 	private String description;
+	@Column(nullable=true)
 	private String serving;
 	private double calories;
 	private double fat;
 	private double sugar;
 	private double protein;
 	private double indexg;
-	private double salt;
 	
 	@OneToMany(mappedBy = "ingredient")
 	private Set<RecipeIngredient> recipeIngredient;
@@ -103,12 +103,6 @@ public class Ingredient {
 	}
 	public void setIndexg(double indexg) {
 		this.indexg = indexg;
-	}
-	public double getSalt() {
-		return salt;
-	}
-	public void setSalt(double salt) {
-		this.salt = salt;
 	}
 	public String getDescription() {
 		return description;
