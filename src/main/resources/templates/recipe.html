@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Przepisy</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Przepisy</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/}">Home</a></li>
+				<li><a th:href="@{/recipes}">Lista przepisow</a></li>	
+				<li class="active"><a href="@{/recipe?nr={id}(id=${recipe.id})}">Przepis</a></li>		
+			</ul>
+			<div class="navbar-collapse collapse">
+				<form th:action="@{/logout}" method="post">
+					<input class="btn" type="submit" value="Sign Out" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<h1 th:text="${recipe.name}"></h1>
+		<div class="row">
+		<div class="col-xs-2"></div>
+		<div class="col-xs-9">	
+			<table class="table table-striped">
+				<th>Skladnik</th>
+				<th>Ilosc [g]</th>
+				<th>Kalorie [ccal/100g]</th>
+				<th>Weglowodany [g/100g]</th>
+				<th>Bialko [g/100g]</th>
+				<th>Tluszcz [g/100g]</th>
+				<th>Indeks glikemiczny</th>
+				
+				<tr th:each="ingredient: ${recipe.recipeIngredient}">
+					<td th:text="${ingredient.ingredient.name}"></td>
+					<td th:text="${ingredient.amount}"></td>
+					<td th:text="${ingredient.ingredient.calories}"></td>
+					<td th:text="${ingredient.ingredient.sugar}"></td>
+					<td th:text="${ingredient.ingredient.protein}"></td>
+					<td th:text="${ingredient.ingredient.fat}"></td>
+					<td th:text="${ingredient.ingredient.indexg}"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-1">
+		</div>
+		</div>
+		<p th:text="${recipe.preparation}">
+		</p>
+		
+
+	</div>
+</body>
+</html>

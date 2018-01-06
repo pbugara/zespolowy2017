@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>Hello!</title>
+<title>Przepisy</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -20,8 +20,8 @@
 				<a class="navbar-brand" href="#">Przepisy</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{/}">Home</a></li>
-				<li><a th:href="@{/recipes}">Lista przepisow</a></li>			
+				<li><a th:href="@{/}">Home</a></li>
+				<li class="active"><a href="@{/receipes}">Lista przepisow</a></li>			
 			</ul>
 			<div class="navbar-collapse collapse">
 				<form th:action="@{/logout}" method="post">
@@ -31,9 +31,27 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="alert alert-info" role="alert" th:if="${delete}">Cat
-			is delete!</div>
-		<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+		
+		<table class="table table-striped">
+			<tr>
+				<th></th>
+				<th>Kalorie</th>
+				<th>Weglowodany</th>
+				<th>Bialko</th>
+				<th>Tluszcz</th>
+				<th>Indeks glikemiczny</th>
+			</tr>
+			<tr th:each="recipe: ${recipeList}">
+				<td><a th:href="@{/recipe?nr={id}(id=${recipe.id})}" th:text="${recipe.name}"></a></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFat,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+			</tr>
+		</table>
+
+
 	</div>
 </body>
 </html>
