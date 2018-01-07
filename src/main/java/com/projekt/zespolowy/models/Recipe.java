@@ -1,6 +1,7 @@
 package com.projekt.zespolowy.models;
 
 import java.sql.Blob;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class Recipe {
 	@Id
 	@GeneratedValue
 	@Column(name = "recipe_id")
-	private long id;
+	private Long id;
 	private String name;
 	private String description;
 	@Lob
@@ -56,8 +57,12 @@ public class Recipe {
 	
 	@Transient
 	private float totalIndexg;
-	
-	
+
+	public Recipe() {
+		recipeIngredient = new HashSet<>();
+		category = new HashSet<>();
+	}
+
 	public float getTotalCalories() {
 		float totalcalories = 0;
 		for(RecipeIngredient recipeIngredient: getRecipeIngredient()) {
@@ -134,12 +139,15 @@ public class Recipe {
 	public void setPhoto(Blob photo) {
 		this.photo = photo;
 	}
-	public long getId() {
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
