@@ -20,12 +20,11 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Przepisy</a>
 			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a th:href="@{/}">Home</a></li>
-					<li><a th:href="@{/recipes}">Lista przepisow</a></li>
-				</ul>
-			</div>
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/}">Strona główna</a></li>
+				<li><a th:href="@{/recipes}">Lista przepisow</a></li>
+				<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+			</ul>
 		</div>
 	</div>
 	<div class="container">

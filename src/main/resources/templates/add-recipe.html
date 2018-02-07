@@ -21,67 +21,116 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a th:href="@{/}">Strona główna</a></li>
-            <li class="active"><a th:href="@{/recipes}">Lista przepisow</a></li>
+            <li><a th:href="@{/recipes}">Lista przepisow</a></li>
             <li class="active"><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
         </ul>
         <div class="navbar-collapse collapse">
             <form th:action="@{/logout}" method="post">
-                <input class="btn" type="submit" value="Wylogujsię" />
+                <input class="btn" type="submit" value="Wyloguj się" />
             </form>
         </div>
     </div>
 </div>
-<div class="container">
-    <p>Dodaj nowy przepis</p>
-
-    <form id="add-recipe-form" type="submit" th:action="@{/recipe/add}" method="post">
-        <div>
+<div class="container">  
+    <div class="col-xs-12 text-center">
+    	<h1>Dodaj nowy przepis</h1>
+    </div>
+    <form id="add-recipe-form" type="submit" th:action="@{/recipe/add}" method="post"> 
+    
+    <div class="row">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-8">	
+         	<hr/>
             <label for="name">Nazwa posiłku: </label>
-            <input th:field="*{recipe.name}" id="name" />
-        </div>
-        <div>
-            <label for="description">Przygotowanie: </label>
-            <textarea th:field="*{recipe.description}" id="description" rows="20" cols="80" />
-        </div>
-
-        <div>
-            <label for="ingredientIds">Składniki: </label>
-            <table border="1" th:if="${!recipe.ingredientIds.empty}">
+            <input th:field="*{recipe.name}" id="name" class="form-control"/>      
+    </div>
+    <div class="col-xs-2"></div>
+    </div>
+    <br/>
+    <div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">	
+    		<hr/>             
+            <table class="table table-striped" th:if="${!recipe.ingredientIds.empty}">
                 <tr>
                     <th>Id</th>
                     <th>Składnik</th>
-                    <th>Ilość</th>
+                    <th>Ilość [g]</th>
                 </tr>
                 <tr th:each="ingr,status : *{recipe.ingredientIds}">
-                    <td> <input hidden="hidden" th:text="${ingr.id}" th:field="*{recipe.ingredientIds[__${status.index}__].id}" /></td>
-                    <td> <input th:field="*{recipe.ingredientIds[__${status.index}__].name}" /></td>
-                    <td> <input th:field="*{recipe.ingredientIds[__${status.index}__].amount}" /></td>
+                    <td> <input hidden="hidden" th:text="${ingr.id}" th:field="*{recipe.ingredientIds[__${status.index}__].id}" />
+                    <input hidden="hidden" th:field="*{recipe.ingredientIds[__${status.index}__].name}" /></td>
+                    <td th:text="*{recipe.ingredientIds[__${status.index}__].name}"> </td>
+                    <td th:text="*{recipe.ingredientIds[__${status.index}__].amount}" >
+                    <input th:field="*{recipe.ingredientIds[__${status.index}__].amount}" /></td>
                 </tr>
             </table>
+   </div>         
+   <div class="col-xs-2"></div>
+   </div>
+   
+   <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-1">
 
-            <br/><br/>
-            <select id="ingredientIds" th:field="*{recipe.ingredientId}">
-                <option th:each="ingredient : ${ingredients}" th:text="${ingredient.name}" th:value="${ingredient.id}" />
-            </select>
-            <label for="amount">Ilość: </label>
-            <input id="amount" th:field="*{recipe.amount}" />
-
-            <button onclick='addIngredient()'>Dodaj składnik</button>
-        </div>
-        <button onclick="addRecipe()">Dodaj</button>
+    </div>
+    <div class="col-xs-3">
+    		<div class="form-group">	   
+    			<label for="ingredientIds">Składnik: </label> 
+           		<select class="form-control" id="ingredientIds" th:field="*{recipe.ingredientId}">
+                	<option th:each="ingredient : ${ingredients}" th:text="${ingredient.name}" th:value="${ingredient.id}" />
+            	</select>
+            </div>
+    </div>  
+    <div class="col-xs-3">	
+    		<div class="form-group">
+    			<label for="amount">Ilość [g]: </label>
+            	<input class="form-control" id="amount" th:field="*{recipe.amount}" />
+            </div>
+    </div>
+    <div class="col-xs-3">
+    	<br/>
+     	<button onclick='addIngredient()' class="btn btn-success">Dodaj składnik</button>    
+    </div>  
+    <div class="col-xs-1">
+    </div>    			
+	</div>
+	
+	
+	<div class="row">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-8">
+			<hr/>
+            <label for="description">Przygotowanie: </label>
+            <textarea class="form-control" th:field="*{recipe.description}" id="description" rows="20" />
+	
+    </div>
+    <div class="col-xs-2"></div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-xs-2"></div>
+		<div class="col-xs-8">
+		<hr/>
+    		<button onclick="addRecipe()" class="btn btn-success">Dodaj przepis</button>
+    	</div>
+    	<div class="col-xs-2"></div>
+    </div>
+    <br/>
     </form>
+     
 </div>
 <script>
     function addIngredient() {
         var url = window.location.origin;
-        url += "/recipe/ingredient/add";
+        url += "/projekt-zespolowy-2017/recipe/ingredient/add";
         document.getElementById('add-recipe-form').action = url;
         document.getElementById('add-recipe-form').submit();
     }
-
+	
     function addRecipe() {
         var url = window.location.origin;
-        url += "/recipe/add";
+        url += "/projekt-zespolowy-2017/recipe/add";
         document.getElementById('add-recipe-form').action = url;
         document.getElementById('add-recipe-from').submit();
     }

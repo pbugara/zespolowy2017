@@ -20,19 +20,18 @@
 				<a class="navbar-brand" href="#">Przepisy</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{/}">Home</a></li>
-				<li><a th:href="@{/recipes}">Lista przepisow</a></li>			
+				<li class="active"><a th:href="@{/}">Strona główna</a></li>
+				<li><a th:href="@{/recipes}">Lista przepisow</a></li>
+				<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
 			</ul>
 			<div class="navbar-collapse collapse">
 				<form th:action="@{/logout}" method="post">
-					<input class="btn" type="submit" value="Sign Out" />
+					<input class="btn" type="submit" value="Wyloguj się" />
 				</form>
 			</div>
 		</div>
 	</div>
 	<div class="container">
-		<div class="alert alert-info" role="alert" th:if="${delete}">Cat
-			is delete!</div>
 		<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 	</div>
 </body>

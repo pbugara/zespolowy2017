@@ -110,6 +110,7 @@ public class Recipe {
 	public float getTotalIndexg() {
 		float totalindexg =0;
 		float totalsugar = getTotalSugar();
+		if(totalsugar==0) return 0.0f;
 		for(RecipeIngredient recipeIngredient: getRecipeIngredient()) {
 			float ingredientSugar = (float)recipeIngredient.getIngredient().getSugar() * recipeIngredient.getAmount()/100;
 			totalindexg += (ingredientSugar/totalsugar)*recipeIngredient.getIngredient().getIndexg();

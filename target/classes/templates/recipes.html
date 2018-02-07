@@ -22,11 +22,11 @@
 		<ul class="nav navbar-nav">
 			<li><a th:href="@{/}">Strona główna</a></li>
 			<li class="active"><a th:href="@{/recipes}">Lista przepisow</a></li>
-			<li class="active"><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+			<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
 		</ul>
 		<div class="navbar-collapse collapse">
 			<form th:action="@{/logout}" method="post">
-				<input class="btn" type="submit" value="Wylogujsię" />
+				<input class="btn" type="submit" value="Wyloguj się" />
 			</form>
 		</div>
 	</div>
@@ -44,11 +44,11 @@
 			</tr>
 			<tr th:each="recipe: ${recipeList}">
 				<td><a th:href="@{/recipe?nr={id}(id=${recipe.id})}" th:text="${recipe.name}"></a></td>
-				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,0,'DEFAULT', 2, 'DEFAULT')}"></td>
-				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,0,'DEFAULT', 2, 'DEFAULT')}"></td>
-				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,0,'DEFAULT', 2, 'DEFAULT')}"></td>
-				<td th:text="${#numbers.formatDecimal(recipe.totalFat,0,'DEFAULT', 2, 'DEFAULT')}"></td>
-				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,0,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFat,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,1,'DEFAULT', 2, 'DEFAULT')}"></td>
 			</tr>
 		</table>
 
