@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Przepisy</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-static-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Przepisy</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a th:href="@{/}">Strona główna</a></li>
+			<li><a th:href="@{/recipes}">Lista przepisow</a></li>
+			<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+			<li class="active"><a th:href="@{/dailymenu/add}">Stwórz listę posiłków</a></li>
+			<li><a th:href="@{/dailymenus}">Listy posiłków</a></li>
+		</ul>
+		<div class="navbar-collapse collapse">
+			<form th:action="@{/logout}" method="post">
+				<input class="btn" type="submit" value="Wyloguj się" />
+			</form>
+		</div>
+	</div>
+</div>
+	<div class="container">
+		
+		
+		<div class="col-xs-12 text-center">
+			<hr/>
+    		<h1>Stwórz listę posiłków</h1>
+    		<hr/>
+    	</div>
+	
+		<form th:object="${menudto}" id="add-daily-menu-form" type="submit" th:action="@{/dailymenu/add}" method="post"> 
+			
+			<h3>Nazwa listy:</h3>
+            <input th:field="*{name}" id="name" class="form-control"/>
+            <br/>
+        <h3 th:if="*{!recipeList.empty}">Wybrane posiłki:</h3>
+        
+        <div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-11">
+		<table class="table table-striped"  th:if="*{!recipeList.empty}">		
+			<tr>
+				<th></th>
+				<th>Kalorie</th>
+				<th>Węglowodany</th>
+				<th>Błonnik</th>
+				<th>Białko</th>
+				<th>Tłuszcz</th>
+				<th>Indeks glikemiczny</th>
+				<th></th>
+			</tr>
+			<tr th:each="recipe,status: ${menudto.recipeList}">
+				<td><a th:href="@{/recipe?nr={id}(id=${recipe.id})}" th:target="_blank" th:text="${recipe.name}"></a></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFiber,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFat,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td>
+					<button th:onclick="'removeRecipe(' + ${recipe.id} +')'" class="btn btn-primary">Usuń</button>
+					<input hidden="hidden" th:value ="${recipe.id}" th:attr ="name='recipeIds[' + ${status.index} + '].string'" />
+				</td>
+			</tr>
+		</table>
+		</div>
+		</div>
+		
+		<br/>
+		<h3>Całkowite wartości odżywcze:</h3>
+		
+		<div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-3">
+			<h4>Kalorie: </h4>
+			<h4>Węglowodany przysw.: </h4>
+			<h4>Białko: </h4>
+			<h4>Tłuszcz: </h4>
+			<h4>Indeks glikemiczny: </h4>
+		</div>
+		<div class="col-xs-1">
+			<h4 th:text="${#numbers.formatDecimal(menudto.totalCalories,1,'DEFAULT', 2, 'DEFAULT')}"> </h4>
+			<h4 th:text="${#numbers.formatDecimal(menudto.totalSugar-menudto.totalFiber,1,'DEFAULT', 2, 'DEFAULT')}"> </h4>
+			<h4 th:text="${#numbers.formatDecimal(menudto.totalProtein,1,'DEFAULT', 2, 'DEFAULT')}"> </h4>
+			<h4 th:text="${#numbers.formatDecimal(menudto.totalFat,1,'DEFAULT', 2, 'DEFAULT')}"> </h4>
+			<h4 th:text="${#numbers.formatDecimal(menudto.totalIG,1,'DEFAULT', 2, 'DEFAULT')}"> </h4>
+		</div>
+		<div class="col-xs-7">
+		
+		</div>
+		</div>
+		
+		<br/>
+		<div class="text-center">
+		<button th:onclick="'saveDailyMenu()'" class="btn btn-success" th:if="*{!recipeList.empty}">Zapisz listę</button>
+		</div>
+		<hr/>
+		<h3>Dodaj posiłek do listy:</h3>
+		
+		<div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-11">
+		<table class="table table-striped">
+			<tr>
+				<th></th>
+				<th>Kalorie</th>
+				<th>Węglowodany</th>	
+				<th>Błonnik</th>
+				<th>Białko</th>
+				<th>Tłuszcz</th>
+				<th>Indeks glikemiczny</th>
+				<th> <input hidden="hidden" id="dtofield" th:field="${menudto.recipeIdToAdd}" /></th>
+			</tr>
+				
+			<tr th:each="recipe: ${recipeList}">
+				<td><a th:href="@{/recipe?nr={id}(id=${recipe.id})}" th:target="_blank" th:text="${recipe.name}"></a></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFiber,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFat,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td>
+				<button th:onclick="'addRecipe(' + ${recipe.id} +')'" class="btn btn-success">Dodaj</button></td>
+			</tr>
+		</table>
+		</div>
+		</div>
+		</form>
+	</div>
+<script>	
+    function addRecipe(recipeId) {   	
+        var url = window.location.origin;
+        url += "/projekt-zespolowy-2017/dailymenu/recipe/add";
+        document.getElementById('add-daily-menu-form').action = url;
+        document.getElementById('dtofield').value = recipeId;
+        document.getElementById('add-daily-menu-form').submit();
+    }
+    function removeRecipe(recipeId){
+    	var url = window.location.origin;
+        url += "/projekt-zespolowy-2017/dailymenu/recipe/remove";
+        document.getElementById('add-daily-menu-form').action = url;
+        document.getElementById('dtofield').value = recipeId;
+        document.getElementById('add-daily-menu-form').submit();
+    }
+    function saveDailyMenu(){
+    	var url = window.location.origin;
+        url += "/projekt-zespolowy-2017/dailymenu/save";
+        document.getElementById('add-daily-menu-form').action = url;
+        document.getElementById('add-daily-menu-form').submit();
+    }
+</script>
+</body>
+</html>

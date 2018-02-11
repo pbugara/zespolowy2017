@@ -50,6 +50,9 @@ public class Recipe {
 	private float totalSugar;
 	
 	@Transient
+	private float totalFiber;
+	
+	@Transient
 	private float totalProtein;
 	
 	@Transient
@@ -57,6 +60,7 @@ public class Recipe {
 	
 	@Transient
 	private float totalIndexg;
+	
 
 	public Recipe() {
 		recipeIngredient = new HashSet<>();
@@ -84,7 +88,19 @@ public class Recipe {
 	public void setTotalSugar(float totalSugar) {
 		this.totalSugar = totalSugar;
 	}
-		
+			
+	public float getTotalFiber() {
+		float totalfiber = 0;
+		for(RecipeIngredient recipeIngredient: getRecipeIngredient()) {
+			totalfiber += recipeIngredient.getIngredient().getFiber() * recipeIngredient.getAmount()/100;
+		}
+		return totalfiber;
+	}
+
+	public void setTotalFiber(float totalFiber) {
+		this.totalFiber = totalFiber;
+	}
+
 	public float getTotalProtein() {
 		float totalprotein = 0;
 		for(RecipeIngredient recipeIngredient: getRecipeIngredient()) {
@@ -110,10 +126,15 @@ public class Recipe {
 	public float getTotalIndexg() {
 		float totalindexg =0;
 		float totalsugar = getTotalSugar();
+		float totalfiber = getTotalFiber();
 		if(totalsugar==0) return 0.0f;
 		for(RecipeIngredient recipeIngredient: getRecipeIngredient()) {
-			float ingredientSugar = (float)recipeIngredient.getIngredient().getSugar() * recipeIngredient.getAmount()/100;
-			totalindexg += (ingredientSugar/totalsugar)*recipeIngredient.getIngredient().getIndexg();
+			float ingredientSugar = (
+									(float)recipeIngredient.getIngredient().getSugar()
+									- (float)recipeIngredient.getIngredient().getFiber()
+										)
+									* recipeIngredient.getAmount()/100;
+			totalindexg += (ingredientSugar/(totalsugar-totalfiber))*recipeIngredient.getIngredient().getIndexg();
 		}
 		return totalindexg;
 	}

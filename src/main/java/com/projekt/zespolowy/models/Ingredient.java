@@ -28,6 +28,7 @@ public class Ingredient {
 	private double calories;
 	private double fat;
 	private double sugar;
+	private double fiber;
 	private double protein;
 	private double indexg;
 	
@@ -110,5 +111,12 @@ public class Ingredient {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public double getFiber() {
+		return fiber;
+	}
+	public void setFiber(double fiber) {
+		this.fiber = fiber;
+	}
+	
 
 }

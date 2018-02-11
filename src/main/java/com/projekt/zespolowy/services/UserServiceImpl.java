@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService{
 		return new UserPrincipalDTO(login(username));
 	}
 
-	private User login(String name) {
+	@Transactional
+	public User login(String name) {
 		User user = repository.findByName(name);
 		if (user != null) {
 			return user;

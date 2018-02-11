@@ -23,6 +23,8 @@
 			<li><a th:href="@{/}">Strona główna</a></li>
 			<li class="active"><a th:href="@{/recipes}">Lista przepisow</a></li>
 			<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+			<li><a th:href="@{/dailymenu/add}">Stwórz listę posiłków</a></li>
+			<li><a th:href="@{/dailymenus}">Listy posiłków</a></li>
 		</ul>
 		<div class="navbar-collapse collapse">
 			<form th:action="@{/logout}" method="post">
@@ -38,6 +40,7 @@
 				<th></th>
 				<th>Kalorie</th>
 				<th>Weglowodany</th>
+				<th>Błonnik</th>
 				<th>Bialko</th>
 				<th>Tluszcz</th>
 				<th>Indeks glikemiczny</th>
@@ -46,6 +49,7 @@
 				<td><a th:href="@{/recipe?nr={id}(id=${recipe.id})}" th:text="${recipe.name}"></a></td>
 				<td th:text="${#numbers.formatDecimal(recipe.totalCalories,1,'DEFAULT', 2, 'DEFAULT')}"></td>
 				<td th:text="${#numbers.formatDecimal(recipe.totalSugar,1,'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td th:text="${#numbers.formatDecimal(recipe.totalFiber,1,'DEFAULT', 2, 'DEFAULT')}"></td>
 				<td th:text="${#numbers.formatDecimal(recipe.totalProtein,1,'DEFAULT', 2, 'DEFAULT')}"></td>
 				<td th:text="${#numbers.formatDecimal(recipe.totalFat,1,'DEFAULT', 2, 'DEFAULT')}"></td>
 				<td th:text="${#numbers.formatDecimal(recipe.totalIndexg,1,'DEFAULT', 2, 'DEFAULT')}"></td>

@@ -61,6 +61,7 @@ public class RecipeController {
 		List<Ingredient> ingredients = ingredientRepository.findAll();
 		map.put("ingredients", ingredients);
 		dto = recipeService.addIngredient(ingredients, dto);
+		System.out.println(dto.getIngredientIds().size());
 		return "add-recipe";
 	}
 }

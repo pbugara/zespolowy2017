@@ -23,6 +23,8 @@
 			<li><a th:href="@{/}">Strona główna</a></li>
 			<li><a th:href="@{/recipes}">Lista przepisow</a></li>
 			<li><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+			<li><a th:href="@{/dailymenu/add}">Stwórz listę posiłków</a></li>
+			<li><a th:href="@{/dailymenus}">Listy posiłków</a></li>
 		</ul>
 		<div class="navbar-collapse collapse">
 			<form th:action="@{/logout}" method="post">
@@ -41,6 +43,7 @@
 				<th>Ilosc [g]</th>
 				<th>Kalorie [ccal/100g]</th>
 				<th>Weglowodany [g/100g]</th>
+				<th>Błonnik [g/100g]</th>
 				<th>Bialko [g/100g]</th>
 				<th>Tluszcz [g/100g]</th>
 				<th>Indeks glikemiczny</th>
@@ -50,6 +53,7 @@
 					<td th:text="${ingredient.amount}"></td>
 					<td th:text="${ingredient.ingredient.calories}"></td>
 					<td th:text="${ingredient.ingredient.sugar}"></td>
+					<td th:text="${ingredient.ingredient.fiber}"></td>
 					<td th:text="${ingredient.ingredient.protein}"></td>
 					<td th:text="${ingredient.ingredient.fat}"></td>
 					<td th:text="${ingredient.ingredient.indexg}"></td>

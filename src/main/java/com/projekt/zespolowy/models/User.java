@@ -25,6 +25,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 
+	@OneToMany(mappedBy = "user")
+	private Set<DailyMenu> dailyMenus;
+	
 	public long getId() {
 		return id;
 	}
@@ -56,4 +59,14 @@ public class User {
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
 	}
+
+	public Set<DailyMenu> getDailyMenus() {
+		return dailyMenus;
+	}
+
+	public void setDailyMenus(Set<DailyMenu> dailyMenus) {
+		this.dailyMenus = dailyMenus;
+	}
+	
+	
 }

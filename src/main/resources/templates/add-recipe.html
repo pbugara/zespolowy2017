@@ -23,6 +23,8 @@
             <li><a th:href="@{/}">Strona główna</a></li>
             <li><a th:href="@{/recipes}">Lista przepisow</a></li>
             <li class="active"><a th:href="@{/recipe/add}">Dodaj nowy przepis</a></li>
+            <li><a th:href="@{/dailymenu/add}">Stwórz listę posiłków</a></li>
+            <li><a th:href="@{/dailymenus}">Listy posiłków</a></li>
         </ul>
         <div class="navbar-collapse collapse">
             <form th:action="@{/logout}" method="post">
@@ -59,10 +61,11 @@
                 </tr>
                 <tr th:each="ingr,status : *{recipe.ingredientIds}">
                     <td> <input hidden="hidden" th:text="${ingr.id}" th:field="*{recipe.ingredientIds[__${status.index}__].id}" />
-                    <input hidden="hidden" th:field="*{recipe.ingredientIds[__${status.index}__].name}" /></td>
+                    <input hidden="hidden" th:field="*{recipe.ingredientIds[__${status.index}__].name}" />
+                    <input hidden="hidden" th:field="*{recipe.ingredientIds[__${status.index}__].amount}" /></td>
                     <td th:text="*{recipe.ingredientIds[__${status.index}__].name}"> </td>
                     <td th:text="*{recipe.ingredientIds[__${status.index}__].amount}" >
-                    <input th:field="*{recipe.ingredientIds[__${status.index}__].amount}" /></td>
+                    </td>
                 </tr>
             </table>
    </div>         
